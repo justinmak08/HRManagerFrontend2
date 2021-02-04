@@ -67,7 +67,7 @@
                         const _this = this
                         //  alert(JSON.stringify(this.ruleForm));
                         // alert(_this);
-                        axios.post('http://localhost:8181/teams/save',this.ruleForm).then(function (resp) {
+                        axios.post('http://localhost:8081/teams/basic/save',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert(_this.ruleForm.name+' Team Added!', '', {
                                     confirmButtonText: 'Confirm',

@@ -67,7 +67,7 @@
                         const _this = this
                         //  alert(JSON.stringify(this.ruleForm));
                         // alert(_this);
-                        axios.put('http://localhost:8181/teams/teamsUpdate',this.ruleForm).then(function (resp) {
+                        axios.put('http://localhost:8081/teams/basic/teamsUpdate',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert('Updated!', '', {
                                     confirmButtonText: 'Done',
@@ -89,7 +89,7 @@
         },
         created() {
             const _this = this
-            axios.get('http://localhost:8181/teams/findById/'+this.$route.query.id).then(function (resp) {
+            axios.get('http://localhost:8081/teams/findById/'+this.$route.query.id).then(function (resp) {
                 _this.ruleForm.id = resp.data.id
                 _this.ruleForm.name = resp.data.name
                 _this.ruleForm.manager = resp.data.manager

@@ -66,16 +66,66 @@
 
 <script>
     export default {
+        name: "TeamsTable",
+        data() {
+            return {
+                emps: [],
+            }
+        },
+
+
         methods: {
             findById(id) {
                 this.$router.push({path:'/teamsUpdate',query:{id:id}})
             },
+
+            initEmps(type) {
+                this.loading = true;
+                let url = '/employee/basic/?page=' + this.page + '&size=' + this.size;
+                if (type && type == 'advanced') {
+                    if (this.searchValue.politicId) {
+                        url += '&politicId=' + this.searchValue.politicId;
+                    }
+                    if (this.searchValue.nationId) {
+                        url += '&nationId=' + this.searchValue.nationId;
+                    }
+                    if (this.searchValue.jobLevelId) {
+                        url += '&jobLevelId=' + this.searchValue.jobLevelId;
+                    }
+                    if (this.searchValue.posId) {
+                        url += '&posId=' + this.searchValue.posId;
+                    }
+                    if (this.searchValue.engageForm) {
+                        url += '&engageForm=' + this.searchValue.engageForm;
+                    }
+                    if (this.searchValue.departmentId) {
+                        url += '&departmentId=' + this.searchValue.departmentId;
+                    }
+                    if (this.searchValue.beginDateScope) {
+                        url += '&beginDateScope=' + this.searchValue.beginDateScope;
+                    }
+                } else {
+                    url += "&name=" + this.keyword;
+                }
+                this.getRequest(url).then(resp => {
+                    this.loading = false;
+                    if (resp) {
+                        this.emps = resp.data;
+                        this.total = resp.total;
+                    }
+                });
+            },
+
             change(currentPage) {
                 this.currentPage = currentPage
-                const _this = this
-                axios.get('http://localhost:8181/teams/findByPage/'+currentPage).then(function (resp) {
-                    _this.teamsTableData = resp.data.data
-                })
+                // const _this = this
+                this.getRequest('/teams/basic/findByPage/'+currentPage).then(resp => {
+                    // this.loading = false;
+                    this.teamsTableData = resp.data.data
+                 });   
+                // axios.get('http://localhost:8081/teams/basic/findByPage/'+currentPage).then(function (resp) {
+                //     _this.teamsTableData = resp.data.data
+                // })
             },
             deleteById(row) {
                 this.$confirm('Delete《'+row.name+'》?', '提示', {
@@ -84,9 +134,9 @@
                     type: 'warning'
                 }).then(() => {
                     const _this = this
-                    axios.delete('http://localhost:8181/teams/deleteById/'+row.id).then(function (resp) {
+                    axios.delete('http://localhost:8081/teams/basic/deleteById/'+row.id).then(function (resp) {
                         if(resp.data == 1){
-                            axios.get('http://localhost:8181/teams/findByPage/'+_this.currentPage).then(function (resp) {
+                            axios.get('http://localhost:8081/teams/basic/findByPage/'+_this.currentPage).then(function (resp) {
                                 // _this.$message({
                                 //     type: 'success',
                                 //     message: '删除成功!'
@@ -123,7 +173,7 @@
 
         created() {
             const _this = this
-            axios.get('http://localhost:8181/teams/findByPage/1').then(function (resp) {
+            axios.get('http://localhost:8081/teams/basic/findByPage/1').then(function (resp) {
                 console.log(resp.data)
                 _this.pageSize = resp.data.pageSize
                 _this.total = resp.data.total
