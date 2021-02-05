@@ -87,7 +87,7 @@
                 this.$router.push({path:'/projects/basicUpdate',query:{id:id}})
             },
             change(currentPage) {
-               this.getRequest('/projects/basic/'+ data.currentPage).then(resp => {
+               this.getRequest('/projects/basic/findByPage'+ this.currentPage).then(resp => {
                    alert(data.currentPage);
                 if (resp) {
                     this.tableData = resp;
@@ -101,9 +101,9 @@
                     type: 'warning'
                 }).then(() => {
                     const _this = this
-                    axios.delete('http://localhost:8181/projects/basic/deleteById/'+row.id).then(function (resp) {
+                    axios.delete('http://localhost:8080/projects/basic/deleteById/'+row.id).then(function (resp) {
                         if(resp.data == 1){
-                            axios.get('http://localhost:8181/projects/basic/findByPage/'+_this.currentPage).then(function (resp) {
+                            axios.get('http://localhost:8080/projects/basic/findByPage/'+_this.currentPage).then(function (resp) {
                                 // _this.$message({
                                 //     type: 'success',
                                 //     message: '删除成功!'
@@ -130,7 +130,7 @@
         },
 
         initProject() {
-            this.getRequest('/projects/basic/'+ data.page).then(resp => {
+            this.getRequest('/projects/basic/findByPage'+ data.page).then(resp => {
                 if (resp) {
                     this.tableData = resp;
                 }
@@ -139,7 +139,7 @@
 
 
         created() {
-             this.getRequest('projects/basic/1').then(resp => {
+             this.getRequest('projects/basic/findByPage/1').then(resp => {
                 console.log(resp.data)
                 this.pageSize = resp.pageSize
                 this.total = resp.total
