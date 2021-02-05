@@ -71,16 +71,28 @@
 
 <script>
     export default {
+        name: "ProjectsTable",
+      
+      
+        data() {
+            return {
+                total:0,
+                pageSize:5,
+                tableData: [],
+                currentPage:0
+            }
+        },
         methods: {
             findById(id) {
-                this.$router.push({path:'/projectsUpdate',query:{id:id}})
+                this.$router.push({path:'/projects/basicUpdate',query:{id:id}})
             },
             change(currentPage) {
-                this.currentPage = currentPage
-                const _this = this
-                axios.get('http://localhost:8181/projects/findByPage/'+currentPage).then(function (resp) {
-                    _this.tableData = resp.data.data
-                })
+               this.getRequest('/projects/basic/'+ data.currentPage).then(resp => {
+                   alert(data.currentPage);
+                if (resp) {
+                    this.tableData = resp;
+                }
+             })
             },
             deleteById(row) {
                 this.$confirm('Delete《'+row.name+'》?', '提示', {
@@ -89,9 +101,9 @@
                     type: 'warning'
                 }).then(() => {
                     const _this = this
-                    axios.delete('http://localhost:8181/projects/deleteById/'+row.id).then(function (resp) {
+                    axios.delete('http://localhost:8181/projects/basic/deleteById/'+row.id).then(function (resp) {
                         if(resp.data == 1){
-                            axios.get('http://localhost:8181/projects/findByPage/'+_this.currentPage).then(function (resp) {
+                            axios.get('http://localhost:8181/projects/basic/findByPage/'+_this.currentPage).then(function (resp) {
                                 // _this.$message({
                                 //     type: 'success',
                                 //     message: '删除成功!'
@@ -117,23 +129,22 @@
             }
         },
 
-        data() {
-            return {
-                total:0,
-                pageSize:5,
-                tableData: [],
-                currentPage:0
-            }
+        initProject() {
+            this.getRequest('/projects/basic/'+ data.page).then(resp => {
+                if (resp) {
+                    this.tableData = resp;
+                }
+            })
         },
 
+
         created() {
-            const _this = this
-            axios.get('http://localhost:8181/projects/findByPage/1').then(function (resp) {
+             this.getRequest('projects/basic/1').then(resp => {
                 console.log(resp.data)
-                _this.pageSize = resp.data.pageSize
-                _this.total = resp.data.total
-                _this.tableData = resp.data.data
-            })
+                this.pageSize = resp.pageSize
+                this.total = resp.total
+                this.tableData = resp.data
+             })
         }
     }
 </script>

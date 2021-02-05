@@ -92,7 +92,7 @@
                     if (valid) {
                         this.ruleForm.bookCase = {id:this.ruleForm.bookCaseId}
                         const _this = this
-                        axios.post('http://localhost:8181/projects/save',this.ruleForm).then(function (resp) {
+                        axios.post('http://localhost:8181/projects/basic/save',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert('《'+_this.ruleForm.name+'》Project Added!', '', {
                                     confirmButtonText: 'Confirm',

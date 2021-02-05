@@ -95,7 +95,7 @@
                     if (valid) {
                         console.log(this.ruleForm)
                         const _this = this
-                        axios.put('http://localhost:8181/employee/employeeUpdate',this.ruleForm).then(function (resp) {
+                        axios.put('http://localhost:8181/personnel/basic/employeeUpdate',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert('Updated!', '', {
                                     confirmButtonText: 'Done',
@@ -117,7 +117,7 @@
         },
         created() {
             const _this = this
-            axios.get('http://localhost:8181/employee/findById/'+this.$route.query.id).then(function (resp) {
+            axios.get('http://localhost:8181/personnel/basic/findById/'+this.$route.query.id).then(function (resp) {
                 _this.ruleForm.id = resp.data.id
                 _this.ruleForm.first_name = resp.data.first_name
                 _this.ruleForm.last_name = resp.data.last_name

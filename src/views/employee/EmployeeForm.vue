@@ -96,7 +96,7 @@
                     if (valid) {
                         this.ruleForm.bookCase = {id:this.ruleForm.bookCaseId}
                         const _this = this
-                        axios.post('http://localhost:8181/employee/save',this.ruleForm).then(function (resp) {
+                        axios.post('http://localhost:8181/personnel/basic/save',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert('《'+_this.ruleForm.name+'Employee Added!', '', {
                                     confirmButtonText: 'Confirm',

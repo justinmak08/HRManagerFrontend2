@@ -118,7 +118,7 @@
             change(currentPage) {
                 this.currentPage = currentPage
                 const _this = this
-                axios.get('http://localhost:8181/employee/findByPage/'+currentPage).then(function (resp) {
+                axios.get('http://localhost:8181/personnel/basic/findByPage/'+currentPage).then(function (resp) {
                     _this.tableData = resp.data.data
                 })
             },
@@ -129,10 +129,10 @@
                     type: 'warning'
                 }).then(() => {
                     const _this = this
-                    axios.delete('http://localhost:8181/employee/deleteById/'+row.id).then(function (resp) {
+                    axios.delete('http://localhost:8181/personnel/basic/deleteById/'+row.id).then(function (resp) {
                         console.log(row.id)
                         if(resp.data == 1){
-                            axios.get('http://localhost:8181/employee/findByPage/'+_this.currentPage).then(function (resp) {
+                            axios.get('http://localhost:8181/personnel/basic/findByPage/'+_this.currentPage).then(function (resp) {
                                 // _this.$message({
                                 //     type: 'success',
                                 //     message: '删除成功!'
@@ -169,7 +169,7 @@
 
         created() {
             const _this = this
-            axios.get('http://localhost:8181/employee/findByPage/1').then(function (resp) {
+            axios.get('http://localhost:8181/personnel/basic/findByPage/1').then(function (resp) {
                 console.log(resp.data)
                 _this.pageSize = resp.data.pageSize
                 _this.total = resp.data.total

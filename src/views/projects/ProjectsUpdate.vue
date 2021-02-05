@@ -90,7 +90,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         const _this = this
-                        axios.put('http://localhost:8181/projects/projectsUpdate',this.ruleForm).then(function (resp) {
+                        axios.put('http://localhost:8181/projects/basic/projectsUpdate',this.ruleForm).then(function (resp) {
                             if(resp.data == 1){
                                 _this.$alert('《'+_this.ruleForm.name+'Updated!', '', {
                                     confirmButtonText: 'Done',
@@ -112,7 +112,7 @@
         },
         created() {
             const _this = this
-            axios.get('http://localhost:8181/projects/findById/'+this.$route.query.id).then(function (resp) {
+            axios.get('http://localhost:8181/projects/basic/findById/'+this.$route.query.id).then(function (resp) {
                 _this.ruleForm.id = resp.data.id
                 _this.ruleForm.name = resp.data.name
                 _this.ruleForm.language = resp.data.language
